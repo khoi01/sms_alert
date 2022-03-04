@@ -47,7 +47,7 @@ class _PolicyPhoneViewContentUIState extends State<PolicyPhoneViewContentUI> {
                           )
                         : CircleAvatar(
                             child: Text(contact.initials()),
-                            backgroundColor: Theme.of(context).accentColor,
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                           ),
                     title: Text(contact.displayName ?? ''),
                     //This can be further expanded to showing contacts detail

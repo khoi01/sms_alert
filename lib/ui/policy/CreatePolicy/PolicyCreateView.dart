@@ -42,7 +42,7 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
         backgroundColor: Colors.white10,
         actions: <Widget>[
           //menu
-          FlatButton(
+          TextButton(
             child: WidgetRef.customText(text:"Submit"),
             onPressed: (){
               if(_formState.currentState.validate()){

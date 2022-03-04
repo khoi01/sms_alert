@@ -7,7 +7,7 @@ import 'package:sms_alert/utils/db.dart';
 class PolicyMsgRepository{
   static Future<List<Policy>> getPoliciesMsgByPolicyID(String policyID) async{
     
-    List<Policy> policies = new List<Policy>();
+    List<Policy> policies = [];
     
 
 

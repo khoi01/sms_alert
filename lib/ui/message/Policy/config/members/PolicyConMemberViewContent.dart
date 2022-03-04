@@ -38,7 +38,7 @@ class _PolicyConViewListMemberUIState extends State<PolicyConViewListMemberUI> {
                         subtitle: Text(contact.phone),
                     leading: CircleAvatar(
                             child: Text(contact.displayName[0]),
-                            backgroundColor: Theme.of(context).accentColor,
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                           ),
                     title: Text(contact.displayName ?? ''),
                   );

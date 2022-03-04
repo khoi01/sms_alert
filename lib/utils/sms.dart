@@ -83,7 +83,7 @@ class  MSG{
                       message: message,
                   );
                   
-                  List<PolicyMsgWord> conWords = new List<PolicyMsgWord>();
+                  List<PolicyMsgWord> conWords = [];
                   
                   words.forEach((word) {
                      

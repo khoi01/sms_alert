@@ -6,7 +6,7 @@ import 'package:sms_alert/utils/db.dart';
 
 class ContactMapPolicyRepository{
   static Future<List<ConContact>> getContactsByPolicyID(String policyID) async{
-    List<ConContact> members = new List<ConContact>();
+    List<ConContact> members = [];
 
     List<Map<String,dynamic>> result = await DB.db().query(
       ConContactMapPolicy.table,

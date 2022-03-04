@@ -93,7 +93,7 @@ class PolicyCreateListUI extends StatelessWidget {
                           )
                         : CircleAvatar(
                             child: Text(contact.initials()),
-                            backgroundColor: Theme.of(context).accentColor,
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                           ),
                     title: Text(contact.displayName ?? ''),
                   );

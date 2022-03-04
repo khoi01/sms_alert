@@ -22,7 +22,7 @@ class _PolicyConSelectWordViewState extends State<PolicyConSelectWordView> {
 
 
 
-  List<ConWord> selectedWords = new List<ConWord>();
+  List<ConWord> selectedWords = [];
 
   @override
   void initState() { 
@@ -36,7 +36,7 @@ class _PolicyConSelectWordViewState extends State<PolicyConSelectWordView> {
         title:Text("Select filter"),
         backgroundColor: Colors.white10,
         actions: [
-            FlatButton(
+            TextButton(
               child: WidgetRef.customText(text:"Apply"),
               onPressed: (){
                 if(selectedWords.length>0){

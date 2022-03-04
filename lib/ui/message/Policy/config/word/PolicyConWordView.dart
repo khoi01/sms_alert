@@ -25,7 +25,7 @@ class _PolicyConWordViewState extends State<PolicyConWordView> {
         title: Text("Filter Configuration"),
         backgroundColor: Colors.white10,
         actions: [
-          FlatButton(child: WidgetRef.customText(
+          TextButton(child: WidgetRef.customText(
             text: "Add Filter"),
             onPressed: (){
                 Navigator.push(context, MaterialPageRoute(

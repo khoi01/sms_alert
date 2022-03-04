@@ -6,7 +6,7 @@ import 'package:sms_alert/utils/db.dart';
 class WordMapPolicyRepository{
   static Future<List<ConWord>> getWordsByPolicyID(String policyID) async{
 
-    List<ConWord> words = new List<ConWord>();
+    List<ConWord> words = [];
 
     List<Map<String,dynamic>> result = await DB.db().query(
       ConWordMapPolicy.table,
