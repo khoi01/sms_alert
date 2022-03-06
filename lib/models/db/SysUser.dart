@@ -4,9 +4,9 @@ class SysUser extends Model {
 
   static String table = "Sys_User";
 
-  String name;
-  String emai;
-  String password;
+  String? name;
+  String? emai;
+  String? password;
   SysUser({
     this.name,
     this.emai,
@@ -22,7 +22,7 @@ class SysUser extends Model {
     };
   }
 
-  static SysUser fromMap(Map<String, dynamic> map) {
+  static SysUser? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return SysUser(

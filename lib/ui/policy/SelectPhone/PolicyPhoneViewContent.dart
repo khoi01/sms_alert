@@ -4,10 +4,10 @@ import 'package:sms_alert/utils/contacts.dart';
 
 class PolicyPhoneViewContentUI extends StatefulWidget {
 
-   final List<Contact> selectedContacts;
+   final List<Contact>? selectedContacts;
 
 
-  PolicyPhoneViewContentUI({Key key,this.selectedContacts}) : super(key: key);
+  PolicyPhoneViewContentUI({Key? key,this.selectedContacts}) : super(key: key);
 
   @override
   _PolicyPhoneViewContentUIState createState() => _PolicyPhoneViewContentUIState();
@@ -15,7 +15,7 @@ class PolicyPhoneViewContentUI extends StatefulWidget {
 
 class _PolicyPhoneViewContentUIState extends State<PolicyPhoneViewContentUI> {
   
-    List<Contact> _contacts;
+    List<Contact>? _contacts;
     List<bool> _selected = List.generate(20, (i) => false); // initially fill it up with false
 
 
@@ -35,27 +35,27 @@ class _PolicyPhoneViewContentUIState extends State<PolicyPhoneViewContentUI> {
               physics: ClampingScrollPhysics(),
               itemCount: _contacts?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
-                Contact contact = _contacts?.elementAt(index);
+                Contact? contact = _contacts?.elementAt(index);
                 return Container(
                   color: _selected[index] ? Colors.green:null,
-                                  child: ListTile(subtitle: Text(contact.phones.first.value),
+                                  child: ListTile(subtitle: Text(contact?.phones?.first.value ?? ""),
                     contentPadding:
                         const EdgeInsets.symmetric(vertical: 2, horizontal: 18),
-                    leading: (contact.avatar != null && contact.avatar.isNotEmpty)
+                    leading: (contact?.avatar != null && (contact?.avatar?.isNotEmpty ?? false) )
                         ? CircleAvatar(
-                            backgroundImage: MemoryImage(contact.avatar),
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                           )
                         : CircleAvatar(
-                            child: Text(contact.initials()),
-                            backgroundColor: Theme.of(context).accentColor,
+                            child: Text(contact?.initials() ?? ""),
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                           ),
-                    title: Text(contact.displayName ?? ''),
+                    title: Text(contact?.displayName ?? ''),
                     //This can be further expanded to showing contacts detail
                     // onPressed().
                     onTap: (){
                       _selected[index] = !_selected[index];
                       //add contact/remove
-                      _selected[index] ? widget.selectedContacts.add(contact) : widget.selectedContacts.remove(contact); 
+                      _selected[index] ? widget.selectedContacts!.add(contact!) : widget.selectedContacts!.remove(contact); 
                     
                       refresh();
                     },

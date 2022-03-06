@@ -8,13 +8,13 @@ class ContactInfo{
     //We already have permissions for contact when we get to this page, so we
     // are now just retrieving it
     final Iterable<Contact> contacts = await ContactsService.getContacts();
-    final List<Contact> modifiedContact = new List<Contact>();
-
+    final List<Contact> modifiedContact = [];
+    
     Contact con;
 
     contacts.forEach((contact) { 
         
-        contact.phones.forEach((phone) {
+        contact.phones!.forEach((phone) {
           con = new Contact(
             displayName: contact.displayName,
             givenName:  contact.givenName,
@@ -41,7 +41,7 @@ class ContactInfo{
 
 
     modifiedContact.forEach((con) {
-         print(con.displayName+":"+con.phones.first.label);
+         print(con.displayName!+":"+con.phones!.first.label!);
      }); 
 
      return modifiedContact;

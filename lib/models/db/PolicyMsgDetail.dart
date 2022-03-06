@@ -4,8 +4,8 @@ import 'package:sms_alert/models/db/Model.dart';
 class PolicyMsgDetail extends Model {
     static String table = "Tran_Msg_Detail";
 
-    String msgID;
-    String message;
+    String? msgID;
+    String? message;
   PolicyMsgDetail({
     this.msgID,
     this.message,
@@ -18,7 +18,7 @@ class PolicyMsgDetail extends Model {
     };
   }
 
-  static PolicyMsgDetail fromMap(Map<String, dynamic> map) {
+  static PolicyMsgDetail? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return PolicyMsgDetail(

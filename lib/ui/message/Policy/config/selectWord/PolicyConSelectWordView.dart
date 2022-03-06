@@ -10,9 +10,9 @@ import 'package:sms_alert/utils/db.dart';
 
 class PolicyConSelectWordView extends StatefulWidget {
 
-  final String policyID;
+  final String? policyID;
   
-  PolicyConSelectWordView({Key key, this.policyID}) : super(key: key);
+  PolicyConSelectWordView({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConSelectWordViewState createState() => _PolicyConSelectWordViewState();
@@ -22,7 +22,7 @@ class _PolicyConSelectWordViewState extends State<PolicyConSelectWordView> {
 
 
 
-  List<ConWord> selectedWords = new List<ConWord>();
+  List<ConWord> selectedWords = [];
 
   @override
   void initState() { 
@@ -36,7 +36,7 @@ class _PolicyConSelectWordViewState extends State<PolicyConSelectWordView> {
         title:Text("Select filter"),
         backgroundColor: Colors.white10,
         actions: [
-            FlatButton(
+            TextButton(
               child: WidgetRef.customText(text:"Apply"),
               onPressed: (){
                 if(selectedWords.length>0){

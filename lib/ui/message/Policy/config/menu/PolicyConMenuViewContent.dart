@@ -4,9 +4,9 @@ import 'package:sms_alert/ui/message/Policy/config/word/PolicyConWordView.dart';
 
 class PolicyConViewMenuContentUI extends StatefulWidget {
 
-  final String policyID;
+  final String? policyID;
 
-  PolicyConViewMenuContentUI({Key key, this.policyID}) : super(key: key);
+  PolicyConViewMenuContentUI({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConMenuViewContentUIState createState() => _PolicyConMenuViewContentUIState();

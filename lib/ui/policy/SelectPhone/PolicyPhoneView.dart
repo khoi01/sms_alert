@@ -16,7 +16,7 @@ class PolicyPhoneView extends StatefulWidget {
 
 class _PolicyPhoneViewState extends State<PolicyPhoneView> {
 
-   List<Contact> selectedContacts = new List<Contact>();
+   List<Contact> selectedContacts = [];
   final globalKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,8 +27,8 @@ class _PolicyPhoneViewState extends State<PolicyPhoneView> {
         backgroundColor: Colors.white10,
         actions: <Widget>[
           //menu
-          FlatButton(
-            child: WidgetRef.customText(text:"Next"),
+          TextButton(
+            
             onPressed: (){
                  if(selectedContacts.length>0){
                     Navigator.push(context, MaterialPageRoute(
@@ -37,8 +37,8 @@ class _PolicyPhoneViewState extends State<PolicyPhoneView> {
                  }else{
                    WidgetRef.showToasted("Select contact number",false);
                 }          
-            },
-          )
+            }, child: WidgetRef.customText(text:"Next"))
+
         ],
       ),
       body: ListView(

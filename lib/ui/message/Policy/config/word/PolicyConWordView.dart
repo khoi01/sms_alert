@@ -4,9 +4,9 @@ import 'package:sms_alert/ui/message/Policy/config/word/PolicyConWordViewContent
 import 'package:sms_alert/utils/widgets.dart';
 
 class PolicyConWordView extends StatefulWidget {
-  final String policyID;
+  final String? policyID;
 
-  PolicyConWordView({Key key, this.policyID}) : super(key: key);
+  PolicyConWordView({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConWordViewState createState() => _PolicyConWordViewState();
@@ -25,7 +25,7 @@ class _PolicyConWordViewState extends State<PolicyConWordView> {
         title: Text("Filter Configuration"),
         backgroundColor: Colors.white10,
         actions: [
-          FlatButton(child: WidgetRef.customText(
+          TextButton(child: WidgetRef.customText(
             text: "Add Filter"),
             onPressed: (){
                 Navigator.push(context, MaterialPageRoute(

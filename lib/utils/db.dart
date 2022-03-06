@@ -15,7 +15,7 @@ import 'package:sms_alert/models/db/SysMenu.dart';
 import 'package:sms_alert/models/db/SysUser.dart';
 
 abstract class DB{
-  static Database _db;
+  static Database? _db;
   static int get _version => 1;
 
   static Future<void> init() async{
@@ -30,7 +30,7 @@ abstract class DB{
     }
   }
   
-  static Database db(){
+  static Database? db(){
 		return _db;
 	}
 
@@ -194,7 +194,7 @@ class DBResult {
     };
   }
 
-  static DBResult fromMap(Map<String, dynamic> map) {
+  static DBResult? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return DBResult(

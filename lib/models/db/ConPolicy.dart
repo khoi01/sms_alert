@@ -6,14 +6,14 @@ class ConPolicy extends Model {
     static String table = "Con_Policy";
 
 
-  String policyID;
-  String policyName;
-  String description;
-  int status;
-  String createdDate;
-  String createdBy;
-  String modifiedDate;
-  String modifiedBy;
+  String? policyID;
+  String? policyName;
+  String? description;
+  int? status;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
   ConPolicy({
     this.policyID,
     this.policyName,
@@ -40,7 +40,7 @@ class ConPolicy extends Model {
     };
   }
 
-  static ConPolicy fromMap(Map<String, dynamic> map) {
+  static ConPolicy? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return ConPolicy(

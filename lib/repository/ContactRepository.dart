@@ -4,16 +4,16 @@ import 'package:sms_alert/utils/db.dart';
 class ContactRepository{
 
 
-  static Future<ConContact> getContactByContactID(String contactID) async{
+  static Future<ConContact?> getContactByContactID(String? contactID) async{
     
-    List<Map> maps = await DB.db().query(
+    List<Map> maps = await DB.db()!.query(
       ConContact.table,
       where: 'contactID = ?',
       whereArgs: [contactID]
     );
 
     if(maps.length > 0){
-      return ConContact.fromMap(maps.first);
+      return ConContact.fromMap(maps.first as Map<String, dynamic>);
     }else{
       return null;
     }

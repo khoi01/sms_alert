@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sms_alert/ui/home/HomeView.dart';
 import 'package:sms_alert/utils/db.dart';
-import 'package:sms_alert/utils/sms.dart';
+// import 'package:sms_alert/utils/sms.dart';
 
 
 //https://github.com/FlutterOpen/flutter-widgets
@@ -9,12 +9,12 @@ import 'package:sms_alert/utils/sms.dart';
 	WidgetsFlutterBinding.ensureInitialized();
     //Init DB here
       await DB.init();
-      SMS.initReceiver();
+      // SMS.initReceiver();
   	runApp(SmsAlertApp());
  }
 
 class SmsAlertApp extends StatelessWidget {
-  const SmsAlertApp({Key key}) : super(key: key);
+  const SmsAlertApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

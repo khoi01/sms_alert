@@ -3,7 +3,7 @@ import 'package:sms_alert/ui/word/WordCreateViewContent.dart';
 import 'package:sms_alert/utils/strings.dart';
 
 class WordCreateView extends StatefulWidget {
-  WordCreateView({Key key}) : super(key: key);
+  WordCreateView({Key? key}) : super(key: key);
 
   @override
   _WordCreateViewState createState() => _WordCreateViewState();

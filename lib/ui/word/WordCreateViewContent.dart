@@ -8,9 +8,9 @@ import 'package:sms_alert/utils/widgets.dart';
 
 class WordCreateViewFormUI extends StatefulWidget {
 
-  final bool listState;
+  final bool? listState;
 
-  WordCreateViewFormUI({Key key, this.listState}) : super(key: key);
+  WordCreateViewFormUI({Key? key, this.listState}) : super(key: key);
 
   @override
   _WordCreateViewFormUIState createState() => _WordCreateViewFormUIState();
@@ -43,7 +43,7 @@ class _WordCreateViewFormUIState extends State<WordCreateViewFormUI> {
                   labelText: "Input filter name here"
                 ),
                 validator: (value){
-                  if(value.isEmpty){
+                  if(value!.isEmpty){
                     return "Please enter filter name";
                   }
 
@@ -58,7 +58,7 @@ class _WordCreateViewFormUIState extends State<WordCreateViewFormUI> {
               child: IconButton(
               icon: Icon(Icons.add_circle_outline),
               onPressed: () {
-                  if(_formKey.currentState.validate()){
+                  if(_formKey.currentState!.validate()){
                     
                     isAlreadyExited(_wordNameController.text).then((isExisted) {
                       if(isExisted){
@@ -122,7 +122,7 @@ class _WordCreateViewFormUIState extends State<WordCreateViewFormUI> {
   Future<bool> isAlreadyExited(String word) async{
     bool isAlreadyExited = true;
 
-    ConWord conWord = await WordRepository.getWordByName(word);
+    ConWord? conWord = await WordRepository.getWordByName(word);
     
     if(conWord == null){
       isAlreadyExited = false;
@@ -139,7 +139,7 @@ class _WordCreateViewFormUIState extends State<WordCreateViewFormUI> {
 class WordCreateViewListUI extends StatefulWidget {
 
   
-  WordCreateViewListUI({Key key}) : super(key: key);
+  WordCreateViewListUI({Key? key}) : super(key: key);
 
   @override
   _WordCreateViewListUIState createState() => _WordCreateViewListUIState();
@@ -147,7 +147,7 @@ class WordCreateViewListUI extends StatefulWidget {
 
 class _WordCreateViewListUIState extends State<WordCreateViewListUI> {
   
-  List<ConWord> _words;
+  List<ConWord>? _words;
   
 
   @override
@@ -169,7 +169,7 @@ class _WordCreateViewListUIState extends State<WordCreateViewListUI> {
               itemCount: _words?.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                    child: Card(child: ListTile(title: Text(_words[index].word)))
+                    child: Card(child: ListTile(title: Text(_words![index].word!)))
                 );
               },
             )
@@ -179,8 +179,8 @@ class _WordCreateViewListUIState extends State<WordCreateViewListUI> {
 
   Future<void> getFilters() async{
     List<Map<String,dynamic>>  results = await Repository.query(ConWord.table);
-    _words = results.map((item) => ConWord.fromMap(item)).toList();
-    _words.sort((a, b) => a.word.compareTo(b.word)); //sort from a to z
+    _words = results.map((item) => ConWord.fromMap(item)).cast<ConWord>().toList();
+    _words!.sort((a, b) => a.word!.compareTo(b.word!)); //sort from a to z
     refresh();
   }
 

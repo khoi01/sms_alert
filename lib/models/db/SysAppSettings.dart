@@ -3,8 +3,8 @@ import 'package:sms_alert/models/db/Model.dart';
 class SysAppSettings extends Model {
   static String table = "Sys_AppSettings";
 
-  String name;
-  String value;
+  String? name;
+  String? value;
 
   SysAppSettings({
     this.name,
@@ -19,7 +19,7 @@ class SysAppSettings extends Model {
     };
   }
 
-  static SysAppSettings fromMap(Map<String, dynamic> map) {
+  static SysAppSettings? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return SysAppSettings(

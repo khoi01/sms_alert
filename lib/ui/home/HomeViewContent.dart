@@ -6,7 +6,7 @@ import 'dart:math' as math;
 import 'package:sms_alert/ui/message/Policy/msg/PolicyMsgView.dart';
 
 class HomeViewHeaderUI extends StatelessWidget {
-  const HomeViewHeaderUI({Key key}) : super(key: key);
+  const HomeViewHeaderUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class HomeViewHeaderUI extends StatelessWidget {
 
 
 class HomeViewContentUI extends StatefulWidget {
-  HomeViewContentUI({Key key}) : super(key: key);
+  HomeViewContentUI({Key? key}) : super(key: key);
 
   @override
   _HomeViewContentUIState createState() => _HomeViewContentUIState();
@@ -29,7 +29,7 @@ class HomeViewContentUI extends StatefulWidget {
 
 class _HomeViewContentUIState extends State<HomeViewContentUI> {
 
-  List<ConPolicy> _policies = []; 
+  List<ConPolicy>? _policies = []; 
   @override
   void initState() { 
     super.initState();
@@ -41,17 +41,17 @@ class _HomeViewContentUIState extends State<HomeViewContentUI> {
     return  Container(
       height: MediaQuery.of(context).size.height,
       padding: const EdgeInsets.all(10),
-       child: ListView.builder(
+       child: _policies != null ? ListView.builder(
          shrinkWrap: true,
-         itemCount: _policies.length,
+         itemCount: _policies?.length ,
          itemBuilder: (context,int index){
           return Column(
                     children: <Widget>[
                       Divider(height: 5.0,),
                       ListTile(
                         contentPadding: EdgeInsets.all(8),
-                        title:(Text("${_policies[index].policyName}")),
-                        subtitle: Text("${_policies[index].description}"),
+                        title:(Text("${_policies?[index].policyName}")),
+                        subtitle: Text("${_policies?[index].description}"),
                         leading: Column(
                           children: <Widget>[
                             CircleAvatar(
@@ -59,7 +59,7 @@ class _HomeViewContentUIState extends State<HomeViewContentUI> {
                             radius:23,
                             
                             child:Text(
-                              '${_policies[index].policyName[0].toUpperCase()}',
+                              '${_policies?[index].policyName![0].toUpperCase()}',
                               style: TextStyle(color:Colors.white),
                               )
                           )
@@ -68,20 +68,20 @@ class _HomeViewContentUIState extends State<HomeViewContentUI> {
                       onTap: (){
                         //go to PolicyMsgView Route
                         Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => PolicyMsgView(policyID: _policies[index].policyID,)
+                          builder: (context) => PolicyMsgView(policyID: _policies?[index].policyID,)
                         ));
                         
                       },),
                     ],
                     );         
           }
-         )
+         ) : Text("")
     );
   }
 
   void getPolicies() async{
       List<Map<String,dynamic>> results = await Repository.query(ConPolicy.table);
-    _policies = results.map((item) => ConPolicy.fromMap(item)).toList();
+    _policies = results.map((item) => ConPolicy.fromMap(item)).cast<ConPolicy>().toList();
       refresh();
   }
 

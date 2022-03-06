@@ -7,15 +7,15 @@ class ConContact extends Model {
   static String table = "Con_Contact";
 
 
-  String contactID; 
-  String displayName;
-  String givenName;
-  String middleName;
-  String phone;
-  String createdDate;
-  String createdBy;
-  String modifiedDate;
-  String modifiedBy;
+  String? contactID; 
+  String? displayName;
+  String? givenName;
+  String? middleName;
+  String? phone;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
 
   ConContact({
     this.contactID,
@@ -44,7 +44,7 @@ class ConContact extends Model {
     };
   }
 
-  static ConContact fromMap(Map<String, dynamic> map) {
+  static ConContact? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return ConContact(

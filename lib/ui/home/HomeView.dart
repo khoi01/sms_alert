@@ -8,7 +8,7 @@ import 'package:sms_alert/ui/word/WordCreateView.dart';
 import 'package:sms_alert/utils/strings.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({Key key}) : super(key: key);
+  HomeView({Key? key}) : super(key: key);
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -50,28 +50,28 @@ Widget _simplePopup() => PopupMenuButton<int>(
               onSelected: (navigationID) async{
                 if(navigationID == 1){
 
-                  final PermissionStatus permissionStatus = await _getPermission();
-                  if(permissionStatus == PermissionStatus.granted){
+                  // final PermissionStatus permissionStatus = await _getPermission();
+                  // if(permissionStatus == PermissionStatus.granted){
                     //navigate to another route
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) => PolicyPhoneView()
                       ));
-                  }else{
-                  //If permissions have been denied show standard cupertino alert dialog
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => CupertinoAlertDialog(
-                              title: Text('Permissions error'),
-                              content: Text('Please enable contacts access '
-                                  'permission in system settings'),
-                              actions: <Widget>[
-                                CupertinoDialogAction(
-                                  child: Text('OK'),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                )
-                              ],
-                            ));                    
-                  }
+                  // }else{
+                  // //If permissions have been denied show standard cupertino alert dialog
+                  //   showDialog(
+                  //       context: context,
+                  //       builder: (BuildContext context) => CupertinoAlertDialog(
+                  //             title: Text('Permissions error'),
+                  //             content: Text('Please enable contacts access '
+                  //                 'permission in system settings'),
+                  //             actions: <Widget>[
+                  //               CupertinoDialogAction(
+                  //                 child: Text('OK'),
+                  //                 onPressed: () => Navigator.of(context).pop(),
+                  //               )
+                  //             ],
+                  //           ));                    
+                  // }
                   
 
                 }else if(navigationID == 2){
@@ -83,20 +83,20 @@ Widget _simplePopup() => PopupMenuButton<int>(
         );
 
   //Check contacts permission
-  Future<PermissionStatus> _getPermission() async {
-    final PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.contacts);
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.denied/*PermissionStatus.disabled*/) {
-      final Map<PermissionGroup, PermissionStatus> permissionStatus =
-          await PermissionHandler()
-              .requestPermissions([PermissionGroup.contacts]);
-      return permissionStatus[PermissionGroup.contacts] ??
-          PermissionStatus.unknown;
-    } else {
-      return permission;
-    }
-  }
+  // Future<PermissionStatus> _getPermission() async {
+  //   final PermissionStatus permission = await PermissionHandler()
+  //       .checkPermissionStatus(PermissionGroup.contacts);
+  //   if (permission != PermissionStatus.granted &&
+  //       permission != PermissionStatus.denied/*PermissionStatus.disabled*/) {
+  //     final Map<PermissionGroup, PermissionStatus> permissionStatus =
+  //         await PermissionHandler()
+  //             .requestPermissions([PermissionGroup.contacts]);
+  //     return permissionStatus[PermissionGroup.contacts] ??
+  //         PermissionStatus.unknown;
+  //   } else {
+  //     return permission;
+  //   }
+  // }
 }
 
 
