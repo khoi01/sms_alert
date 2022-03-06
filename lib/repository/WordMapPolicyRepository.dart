@@ -4,20 +4,20 @@ import 'package:sms_alert/repository/WordRepository.dart';
 import 'package:sms_alert/utils/db.dart';
 
 class WordMapPolicyRepository{
-  static Future<List<ConWord>> getWordsByPolicyID(String policyID) async{
+  static Future<List<ConWord?>?> getWordsByPolicyID(String? policyID) async{
 
-    List<ConWord> words = [];
+    List<ConWord?> words = [];
 
-    List<Map<String,dynamic>> result = await DB.db().query(
+    List<Map<String,dynamic>> result = await DB.db()!.query(
       ConWordMapPolicy.table,
       where: 'policyID = ?',
       whereArgs: [policyID]
     );
 
-    List<ConWordMapPolicy> conWordMapPolicy = result.map((item) => ConWordMapPolicy.fromMap(item)).toList();
+    List<ConWordMapPolicy?> conWordMapPolicy = result.map((item) => ConWordMapPolicy.fromMap(item)).toList();
   
-    await Future.forEach(conWordMapPolicy, (item) async{
-      ConWord word = await WordRepository.getWordByWordID(item.wordID);
+    await Future.forEach(conWordMapPolicy, (dynamic item) async{
+      ConWord? word = await WordRepository.getWordByWordID(item.wordID);
       words.add(word);
     });
 

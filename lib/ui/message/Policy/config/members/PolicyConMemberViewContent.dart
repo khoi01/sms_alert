@@ -4,8 +4,8 @@ import 'package:sms_alert/repository/ContactMapPolicyRepository.dart';
 
 class PolicyConViewListMemberUI extends StatefulWidget {
 
-  final String policyID;
-  PolicyConViewListMemberUI({Key key, this.policyID}) : super(key: key);
+  final String? policyID;
+  PolicyConViewListMemberUI({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConViewListMemberUIState createState() => _PolicyConViewListMemberUIState();
@@ -13,7 +13,7 @@ class PolicyConViewListMemberUI extends StatefulWidget {
 
 class _PolicyConViewListMemberUIState extends State<PolicyConViewListMemberUI> {
 
-  List<ConContact> _members;
+  List<ConContact?>? _members;
 
   @override
   void initState() { 
@@ -31,16 +31,16 @@ class _PolicyConViewListMemberUIState extends State<PolicyConViewListMemberUI> {
               itemCount: _members?.length ?? 0,
               physics: ClampingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                ConContact contact = _members?.elementAt(index);
+                ConContact? contact = _members?.elementAt(index);
                 return ListTile(
                     contentPadding:
                         const EdgeInsets.symmetric(vertical: 2, horizontal: 18),
-                        subtitle: Text(contact.phone),
+                        subtitle: Text(contact?.phone ?? ""),
                     leading: CircleAvatar(
-                            child: Text(contact.displayName[0]),
+                            child: Text(contact?.displayName![0] ?? ""),
                             backgroundColor: Theme.of(context).colorScheme.secondary,
                           ),
-                    title: Text(contact.displayName ?? ''),
+                    title: Text(contact?.displayName ?? ''),
                   );
               },
             )

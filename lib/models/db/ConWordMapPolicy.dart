@@ -5,12 +5,12 @@ class ConWordMapPolicy extends Model {
 
   static String table = "Con_Word_Map_Policy";
 
-  String wordID;
-  String policyID;
-  String createdDate;
-  String createdBy;
-  String modifiedDate;
-  String modifiedBy;
+  String? wordID;
+  String? policyID;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
   ConWordMapPolicy({
     this.wordID,
     this.policyID,
@@ -31,7 +31,7 @@ class ConWordMapPolicy extends Model {
     };
   }
 
-  static ConWordMapPolicy fromMap(Map<String, dynamic> map) {
+  static ConWordMapPolicy? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return ConWordMapPolicy(

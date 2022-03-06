@@ -6,9 +6,9 @@ import 'package:sms_alert/ui/message/Policy/msg/PolicyMsgViewContent.dart';
 
 class PolicyMsgView extends StatefulWidget {
 
-  final String policyID;
+  final String? policyID;
 
-  PolicyMsgView({Key key, this.policyID}) : super(key: key);
+  PolicyMsgView({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyMsgViewState createState() => _PolicyMsgViewState();
@@ -18,7 +18,7 @@ class PolicyMsgView extends StatefulWidget {
 class _PolicyMsgViewState extends State<PolicyMsgView> {
 
 
-  String _policyName;
+  String? _policyName;
 
   @override
   void initState() { 
@@ -46,7 +46,7 @@ class _PolicyMsgViewState extends State<PolicyMsgView> {
 
     void getConPolicy() async{
     
-    ConPolicy conPolicy = await PolicyRepository.getPolicyById(widget.policyID);
+    ConPolicy? conPolicy = await PolicyRepository.getPolicyById(widget.policyID);
 
     if(conPolicy != null){
         _policyName = conPolicy.policyName;

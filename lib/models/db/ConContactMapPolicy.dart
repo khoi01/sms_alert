@@ -5,12 +5,12 @@ class ConContactMapPolicy extends Model {
 
   static String table = "Con_Contact_Map_Policy";
 
-  String contactID;
-  String policyID;
-  String createdDate;
-  String createdBy;
-  String modifiedDate;
-  String modifiedBy;
+  String? contactID;
+  String? policyID;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
 
   ConContactMapPolicy({
     this.contactID,
@@ -32,7 +32,7 @@ class ConContactMapPolicy extends Model {
     };
   }
 
-  static ConContactMapPolicy fromMap(Map<String, dynamic> map) {
+  static ConContactMapPolicy? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return ConContactMapPolicy(

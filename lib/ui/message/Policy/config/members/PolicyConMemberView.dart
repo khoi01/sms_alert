@@ -3,9 +3,9 @@ import 'package:sms_alert/ui/message/Policy/config/members/PolicyConMemberViewCo
 
 class PolicyConMemberView extends StatelessWidget {
 
-  final String policyID;
+  final String? policyID;
 
-  const PolicyConMemberView({Key key, this.policyID}) : super(key: key);
+  const PolicyConMemberView({Key? key, this.policyID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

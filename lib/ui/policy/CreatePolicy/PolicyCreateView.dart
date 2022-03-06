@@ -16,9 +16,9 @@ import 'PolicyCreateViewContent.dart';
 
 class PolicyCreateView extends StatefulWidget {
 
-  final List<Contact> contacts;
+  final List<Contact>? contacts;
   
-  PolicyCreateView({Key key,this.contacts}) : super(key: key);
+  PolicyCreateView({Key? key,this.contacts}) : super(key: key);
 
   @override
   _PolicyCreateViewState createState() => _PolicyCreateViewState();
@@ -45,7 +45,7 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
           TextButton(
             child: WidgetRef.customText(text:"Submit"),
             onPressed: (){
-              if(_formState.currentState.validate()){
+              if(_formState.currentState!.validate()){
                   
                   isAlreadyExisted(_policyNameController.text).then((value) {
                       if(value){
@@ -66,7 +66,7 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
       body: ListView(
         children:<Widget>[
             PolicyCreateViewFormUI(formState: _formState,policyNameController:_policyNameController,),
-            PolicyCreateMemberUI(members: widget.contacts.length,),
+            PolicyCreateMemberUI(members: widget.contacts!.length,),
             PolicyCreateListUI(contacts:widget.contacts,),
         ]
       ),
@@ -90,7 +90,7 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
 
     print("[ConPolicy]Create :$result");
 
-    widget.contacts.forEach((contact) async {
+    widget.contacts!.forEach((contact) async {
       var contactID = DB.generateId();
 
       ConContact conContact = new ConContact(
@@ -98,7 +98,7 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
         displayName:  contact.displayName,
         givenName:  contact.givenName,
         middleName: contact.middleName,
-        phone: contact.phones.first.value,
+        phone: contact.phones!.first.value,
         createdDate: date,
         createdBy:  StringRef.user,
       );
@@ -129,7 +129,7 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
     
     bool isAlreadyExited = true;
 
-    ConPolicy conPolicy = await PolicyRepository.getPolicyByName(policyName);
+    ConPolicy? conPolicy = await PolicyRepository.getPolicyByName(policyName);
     
     if(conPolicy == null)
       isAlreadyExited = false;

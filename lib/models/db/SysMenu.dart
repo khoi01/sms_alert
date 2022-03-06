@@ -6,11 +6,11 @@ class SysMenu extends Model {
 
   static String table = "Sys_Menu";
 
-  String menuID;
-  String menuName;
-  String description;
-  int status;
-  String package;
+  String? menuID;
+  String? menuName;
+  String? description;
+  int? status;
+  String? package;
 
   SysMenu({
     this.menuID,
@@ -30,7 +30,7 @@ class SysMenu extends Model {
     };
   }
 
-  static SysMenu fromMap(Map<String, dynamic> map) {
+  static SysMenu? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return SysMenu(

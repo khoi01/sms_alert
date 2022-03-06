@@ -14,7 +14,7 @@ class ContactInfo{
 
     contacts.forEach((contact) { 
         
-        contact.phones.forEach((phone) {
+        contact.phones!.forEach((phone) {
           con = new Contact(
             displayName: contact.displayName,
             givenName:  contact.givenName,
@@ -41,7 +41,7 @@ class ContactInfo{
 
 
     modifiedContact.forEach((con) {
-         print(con.displayName+":"+con.phones.first.label);
+         print(con.displayName!+":"+con.phones!.first.label!);
      }); 
 
      return modifiedContact;

@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class WidgetRef{
 
-  static Widget customText({String text}){
+  static Widget customText({required String text}){
     return Text(text,
             style: TextStyle(
               color: Colors.white,
@@ -25,6 +25,9 @@ class WidgetRef{
                         textColor: Colors.white,
                         fontSize: 16.0
                     );
+
+
+                    
   }
 
 }

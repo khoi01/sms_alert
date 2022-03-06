@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 
@@ -5,11 +6,11 @@ import 'package:contacts_service/contacts_service.dart';
 
 class PolicyCreateViewFormUI extends StatefulWidget {
 
-  final GlobalKey<FormState>formState;
-  final TextEditingController policyNameController;
+  final GlobalKey<FormState>?formState;
+  final TextEditingController? policyNameController;
 
 
-  const PolicyCreateViewFormUI({Key key, this.formState,this.policyNameController}) : super(key: key);
+  const PolicyCreateViewFormUI({Key? key, this.formState,this.policyNameController}) : super(key: key);
 
 
   @override
@@ -34,7 +35,7 @@ class _PolicyCreateViewFormUIState extends State<PolicyCreateViewFormUI> {
                 labelText: "input policy name here"
               ),
               validator: (value){
-                if(value.isEmpty){
+                if(value!.isEmpty){
                   return "Please enter policy name";
                 }
                 
@@ -52,9 +53,9 @@ class _PolicyCreateViewFormUIState extends State<PolicyCreateViewFormUI> {
 
 class PolicyCreateMemberUI extends StatelessWidget {
 
-  final int members;
+  final int? members;
 
-  const PolicyCreateMemberUI({Key key, this.members}) : super(key: key);
+  const PolicyCreateMemberUI({Key? key, this.members}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +70,9 @@ class PolicyCreateMemberUI extends StatelessWidget {
 
 class PolicyCreateListUI extends StatelessWidget {
 
-  final List<Contact> contacts;
+  final List<Contact>? contacts;
 
-  const PolicyCreateListUI({Key key, this.contacts}) : super(key: key);
+  const PolicyCreateListUI({Key? key, this.contacts}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,20 +83,20 @@ class PolicyCreateListUI extends StatelessWidget {
               itemCount: contacts?.length ?? 0,
               physics: ClampingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                Contact contact = contacts?.elementAt(index);
+                Contact? contact = contacts?.elementAt(index);
                 return ListTile(
                     contentPadding:
                         const EdgeInsets.symmetric(vertical: 2, horizontal: 18),
-                        subtitle: Text(contact.phones.first.value),
-                    leading: (contact.avatar != null && contact.avatar.isNotEmpty)
+                        subtitle: Text(contact?.phones?.first.value ?? ""),
+                    leading: (contact?.avatar != null && (contact?.avatar?.isNotEmpty ?? false))
                         ? CircleAvatar(
-                            backgroundImage: MemoryImage(contact.avatar),
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                           )
                         : CircleAvatar(
-                            child: Text(contact.initials()),
+                            child: Text(contact?.initials() ?? ""),
                             backgroundColor: Theme.of(context).colorScheme.secondary,
                           ),
-                    title: Text(contact.displayName ?? ''),
+                    title: Text(contact?.displayName ?? ''),
                   );
               },
             )

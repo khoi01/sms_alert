@@ -7,13 +7,13 @@ class ConWord extends Model {
 
     static String table = "Con_Word";
 
-  String wordID;
-  String word;
-  int status;
-  String createdDate;
-  String createdBy;
-  String modifiedDate;
-  String modifiedBy;
+  String? wordID;
+  String? word;
+  int? status;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
   ConWord({
     this.wordID,
     this.word,
@@ -36,7 +36,7 @@ class ConWord extends Model {
     };
   }
 
-  static ConWord fromMap(Map<String, dynamic> map) {
+  static ConWord? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return ConWord(

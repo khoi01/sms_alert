@@ -4,9 +4,9 @@ import 'package:sms_alert/ui/message/Policy/config/word/PolicyConWordViewContent
 import 'package:sms_alert/utils/widgets.dart';
 
 class PolicyConWordView extends StatefulWidget {
-  final String policyID;
+  final String? policyID;
 
-  PolicyConWordView({Key key, this.policyID}) : super(key: key);
+  PolicyConWordView({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConWordViewState createState() => _PolicyConWordViewState();

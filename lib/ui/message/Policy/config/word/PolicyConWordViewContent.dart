@@ -6,10 +6,10 @@ import 'package:sms_alert/utils/strings.dart';
 
 class PolicyConWordFormViewUI extends StatefulWidget {
 
-  final String policyID;
+  final String? policyID;
 
 
-  PolicyConWordFormViewUI({Key key, this.policyID}) : super(key: key);
+  PolicyConWordFormViewUI({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConWordFormViewUIState createState() => _PolicyConWordFormViewUIState();
@@ -37,9 +37,9 @@ class _PolicyConWordFormViewUIState extends State<PolicyConWordFormViewUI> {
 
 class PolicyWordListViewUI extends StatefulWidget {
 
-  final String policyID;
+  final String? policyID;
 
-  PolicyWordListViewUI({Key key, this.policyID}) : super(key: key);
+  PolicyWordListViewUI({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyWordListViewUIState createState() => _PolicyWordListViewUIState();
@@ -47,7 +47,7 @@ class PolicyWordListViewUI extends StatefulWidget {
 
 class _PolicyWordListViewUIState extends State<PolicyWordListViewUI> {
 
-  List<ConWord> _words;
+  List<ConWord?>? _words;
 
   @override
   void initState() {
@@ -64,11 +64,11 @@ class _PolicyWordListViewUIState extends State<PolicyWordListViewUI> {
               physics: ClampingScrollPhysics(),
               itemCount: _words?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
-                ConWord word = _words?.elementAt(index);
+                ConWord? word = _words?.elementAt(index);
                 return Container(
                   child: Card(
                           child: ListTile(
-                          title: Text(word.word ?? ''),
+                          title: Text(word?.word ?? ''),
                         ),
                   ),
                 );

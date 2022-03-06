@@ -6,13 +6,13 @@ class PolicyMsg extends Model {
 
   static String table = "Policy_Msg";
 
-  String msgID;
-  String contactID;
-  String policyID;
-  String createdDate;
-  String createdBy;
-  String modifiedDate;
-  String modifiedBy;
+  String? msgID;
+  String? contactID;
+  String? policyID;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
   PolicyMsg({
     this.msgID,
     this.contactID,
@@ -36,7 +36,7 @@ class PolicyMsg extends Model {
     };
   }
 
-  static PolicyMsg fromMap(Map<String, dynamic> map) {
+  static PolicyMsg? fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
   
     return PolicyMsg(

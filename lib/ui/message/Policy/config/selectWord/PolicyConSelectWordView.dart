@@ -10,9 +10,9 @@ import 'package:sms_alert/utils/db.dart';
 
 class PolicyConSelectWordView extends StatefulWidget {
 
-  final String policyID;
+  final String? policyID;
   
-  PolicyConSelectWordView({Key key, this.policyID}) : super(key: key);
+  PolicyConSelectWordView({Key? key, this.policyID}) : super(key: key);
 
   @override
   _PolicyConSelectWordViewState createState() => _PolicyConSelectWordViewState();

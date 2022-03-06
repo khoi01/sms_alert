@@ -4,20 +4,20 @@ import 'package:sms_alert/models/db/PolicyMsgWord.dart';
 
 class Policy {
 
-  PolicyMsg policyMsg;
-  PolicyMsgDetail policyMsgDetail;
-  List<PolicyMsgWord> policyMsgWord;
+  late PolicyMsg? policyMsg;
+  late PolicyMsgDetail? policyMsgDetail;
+  List<PolicyMsgWord>? policyMsgWord;
 
 
-  void setPolicyMsg(PolicyMsg policyMsg){
+  void setPolicyMsg(PolicyMsg? policyMsg){
     this.policyMsg = policyMsg;
   }
 
-  void setPolicyMsgDetail(PolicyMsgDetail policyMsgDetail){
+  void setPolicyMsgDetail(PolicyMsgDetail? policyMsgDetail){
     this.policyMsgDetail = policyMsgDetail;
   }
 
-  void setPolicyMsgWord(List<PolicyMsgWord> policyMsgWord){
+  void setPolicyMsgWord(List<PolicyMsgWord>? policyMsgWord){
     this.policyMsgWord = policyMsgWord;
   }
 }
