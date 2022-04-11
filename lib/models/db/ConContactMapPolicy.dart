@@ -32,7 +32,7 @@ class ConContactMapPolicy extends Model {
     };
   }
 
-  static ConContactMapPolicy? fromMap(Map<String, dynamic> map) {
+  static ConContactMapPolicy? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return ConContactMapPolicy(

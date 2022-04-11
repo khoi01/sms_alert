@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sms_alert/ui/message/Policy/config/selectWord/PolicyConSelectWordView.dart';
-import 'package:sms_alert/ui/message/Policy/config/word/PolicyConWordViewContent.dart';
+import 'package:sms_alert/ui/message/Policy/config/configWord/listWord/PolicyConWordViewContent.dart';
+import 'package:sms_alert/ui/message/Policy/config/configWord/selectWord/PolicyConSelectWordView.dart';
 import 'package:sms_alert/utils/widgets.dart';
 
 class PolicyConWordView extends StatefulWidget {
@@ -22,7 +22,7 @@ class _PolicyConWordViewState extends State<PolicyConWordView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter Configuration"),
+        title: Text("Filter Word Configuration"),
         backgroundColor: Colors.white10,
         actions: [
           TextButton(child: WidgetRef.customText(

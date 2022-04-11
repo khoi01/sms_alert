@@ -1,166 +1,181 @@
-// import 'dart:io' show Platform;
+import 'dart:io' show Platform;
 // import 'package:sms/sms.dart';
-// import 'package:sms_alert/models/db/ConContact.dart';
-// import 'package:sms_alert/models/db/ConPolicy.dart';
-// import 'package:sms_alert/models/db/ConWord.dart';
-// import 'package:sms_alert/models/db/PolicyMsg.dart';
-// import 'package:sms_alert/models/db/PolicyMsgDetail.dart';
-// import 'package:sms_alert/models/db/PolicyMsgWord.dart';
-// import 'package:sms_alert/repository/ContactMapPolicyRepository.dart';
+import 'package:sms_alert/models/db/ConContact.dart';
+import 'package:sms_alert/models/db/ConPolicy.dart';
+import 'package:sms_alert/models/db/ConWord.dart';
+import 'package:sms_alert/models/db/PolicyMsg.dart';
+import 'package:sms_alert/models/db/PolicyMsgDetail.dart';
+import 'package:sms_alert/models/db/PolicyMsgWord.dart';
+import 'package:sms_alert/repository/ContactMapPolicyRepository.dart';
+import 'package:sms_alert/repository/PolicyRepository.dart';
 
-// import 'package:sms_alert/repository/Repository.dart';
-// import 'package:sms_alert/repository/WordMapPolicyRepository.dart';
-// import 'package:sms_alert/utils/db.dart';
-// import 'package:sms_alert/utils/strings.dart';
+import 'package:sms_alert/repository/Repository.dart';
+import 'package:sms_alert/repository/WordMapPolicyRepository.dart';
+import 'package:sms_alert/utils/Util.dart';
+import 'package:sms_alert/utils/db.dart';
+import 'package:sms_alert/utils/strings.dart';
+import 'package:telephony/telephony.dart';
 
-// class SMS{
+class SMS {
+  static void initReceiver() {
+    if (Platform.isAndroid) {
+      receiver();
+    } else if (Platform.isIOS) {}
+  }
 
+  static backgrounMessageHandler(SmsMessage message) async {
+    // DB.reinit();
+    //Handle background message
+    MSG.initMsg(message.address ?? "", message.body ?? "");
+  }
 
-//   static void initReceiver(){
-//     if(Platform.isAndroid){
-//         receiver();
-//     }else if(Platform.isIOS){
+  static void receiver() {
+    // This will not work as the instance will be replaced by
+    // the one in background.
+    final telephony = Telephony.instance;
 
-//     }
-//   }
+    telephony.listenIncomingSms(
+        onNewMessage: (SmsMessage message) {
+          // await DB.reinit();
+          MSG.initMsg(message.address ?? "", message.body ?? "");
+        },
+        onBackgroundMessage: backgrounMessageHandler);
+  }
+}
 
-//   static void receiver(){
-      
-//       SmsReceiver receiver = new SmsReceiver();
-//       receiver.onSmsReceived.listen((SmsMessage msg){
-//         //  print("sms msg:${msg.body}");
-//         //  print("sms id:${msg.id.toString()}");
-//         //  print("sms sender: ${msg.sender}");
-//         //  print("sms kind: ${msg.kind}");
-         
-//         //  msg.toMap.forEach((key, value) {
-//         //    print("sms tomap: key:$key value:$value");
-//         //  });
+class MSG {
+  static void initMsg(String sender, String message) async {
+    await DB.init();
+    //Get existed policy
+    List<Map<String, dynamic>> results =
+        await Repository.query(ConPolicy.table);
+    List<ConPolicy?> policies =
+        results.map((item) => ConPolicy.fromMap(item)).toList();
+    List<ConContact>? members;
+    List<ConWord>? words;
 
-        
-//          MSG.initMsg(msg.sender,msg.body);
+    policies.forEach((policy) async {
+      //get all member by policy
+      members = (await ContactMapPolicyRepository.getMembersByPolicyID(
+              policy!.policyID))
+          ?.cast<ConContact>();
+      //get all word by policy
+      words =
+          (await WordMapPolicyRepository.getWordsByPolicyID(policy.policyID))
+              ?.cast<ConWord>();
 
-//       });
+      members?.forEach((member) async {
+        String? phoneModified =
+            member.phone?.replaceAll(new RegExp(r"\s+\b|\b\s|\)|\(|\-"), "");
+        if (phoneModified == sender && words != null) {
+   
 
-//   }
+          if (isContainAnyWordFilter(message.split(' '), words!)) {
+   
+          //show/notify user via notification
+          AppNotification.showNotication(policy,message);
 
-// }
+          //update new message arrived
+          await PolicyRepository.updateContainNewMessageByPolicyID(
+              policy.policyID);
+              
+            var msgId = DB.generateId();
 
-// class  MSG{
+            PolicyMsg policyMsg = new PolicyMsg(
+                msgID: msgId,
+                contactID: member.contactID,
+                policyID: policy.policyID,
+                createdDate: DateTime.now().millisecondsSinceEpoch.toString(),
+                createdBy: StringRef.system,
+                source: AppMsgSource.sms);
 
-//   static void initMsg(String sender,String message) async {
+            PolicyMsgDetail policyMsgDetail = new PolicyMsgDetail(
+                msgID: msgId, message: message, policyID: policy.policyID);
 
-//       //Get existed policy
-//       List<Map<String,dynamic>> results = await Repository.query(ConPolicy.table);
-//       List<ConPolicy> policies = results.map((item) => ConPolicy.fromMap(item)).toList();
-//       List<ConContact> members;
-//       List<ConWord> words;
+            List<PolicyMsgWord> conWords = [];
 
-//       policies.forEach((policy) async {
-//             //get all member by policy
-//              members = await  ContactMapPolicyRepository.getContactsByPolicyID(policy.policyID);
-//              //get all word by policy
-//              words = await WordMapPolicyRepository.getWordsByPolicyID(policy.policyID);
+            words?.forEach((word) {
+              PolicyMsgWord policyMsgWord = new PolicyMsgWord(
+                  msgID: msgId, wordID: word.wordID, policyID: policy.policyID);
 
-//             members.forEach((member) async {
-//                String phoneModified = member.phone.replaceAll(new RegExp(r"\s+\b|\b\s|\)|\(|\-"), "");
-//               if(phoneModified == sender){               
-//                 if(isContainFilter(message.split(' '), words)){
+              conWords.add(policyMsgWord);
+            });
 
-//                   var msgId = DB.generateId();
-//                   String date = DateTime.now().toIso8601String();
+            await _save(policyMsg, policyMsgDetail, conWords).then((result) {
+              if (result.isSucess) {
+                print("[SMS Service]: ${result.message}");
+              } else {
+                print("[SMS Service]: ${result.message}");
+              }
+            });
+          }
+        }
+      });
+    });
+  }
 
-//                   PolicyMsg policyMsg = new PolicyMsg(
-//                     msgID: msgId,
-//                     contactID: member.contactID ,
-//                     policyID: policy.policyID,
-//                     createdDate: date,
-//                     createdBy: StringRef.system
-//                   );
+  // need to have at least one word then its will save msg to database
+  static bool isContainAnyWordFilter(
+      List<String> message, List<ConWord> words) {
+    bool isContainAnyWordFilter = false;
 
-//                   PolicyMsgDetail policyMsgDetail = new PolicyMsgDetail(
-//                       msgID: msgId,
-//                       message: message,
-//                   );
-                  
-//                   List<PolicyMsgWord> conWords = [];
-                  
-//                   words.forEach((word) {
-                     
-//                      PolicyMsgWord policyMsgWord = new PolicyMsgWord(
-//                       msgID: msgId,
-//                       wordID: word.wordID
-//                      );
+    message.forEach((text) {
+      words.forEach((word) {
+        if (text.toLowerCase() == word.word?.toLowerCase()) {
+          isContainAnyWordFilter = true;
+        }
+      });
+    });
 
-//                      conWords.add(policyMsgWord);
-//                   });
+    return isContainAnyWordFilter;
+  }
 
-//                   await _save(policyMsg, policyMsgDetail,conWords).then((result) {
-                    
-//                     if(result.isSucess){
-//                       print("[SMS Service]: ${result.message}" );
-//                     }else{
-//                       print("[SMS Service]: ${result.message}" );
-                      
-//                     }
-                  
-//                   });
+  //need to have all words then its will save msg to database
+  static bool isContainAllWordFilter(
+      List<String> message, List<ConWord> words) {
+    bool isContainAllWordFilter = true;
+    int totalOfWordNeedToContain = words.length;
+    int totalWordAvailable = 0;
 
-//                 }
-//               }
-//             });
-             
+    message.forEach((text) {
+      words.forEach((word) {
+        if (text.toLowerCase() == word.word?.toLowerCase()) {
+          totalWordAvailable++;
+        }
+      });
+    });
 
-//       });
+    if (totalWordAvailable < totalOfWordNeedToContain) {
+      isContainAllWordFilter = false;
+    }
 
-      
-//   }
+    return isContainAllWordFilter;
+  }
 
-//   static bool isContainFilter(List<String> message,List<ConWord> words ){
-//     bool isContainFilter = true;
-//     int totalOfWordNeedToContain = words.length;
-//     int totalWordAvailable =0;
-    
-//     message.forEach((text) {
-//         words.forEach((word) { 
-//           if(text == word.word){
-//             totalWordAvailable++;
-//           }
-//         });  
-//     });
+  static Future<DBResult> _save(
+      PolicyMsg policyMsg,
+      PolicyMsgDetail policyMsgDetail,
+      List<PolicyMsgWord> policyMsgWord) async {
+    DBResult dbResult = DBResult(true, DBResult.saveMsg);
 
-//     if(totalWordAvailable<totalOfWordNeedToContain){
-//       isContainFilter = false;
-//     }
-      
-//     return isContainFilter;
-//   }
-//   static Future<DBResult> _save(PolicyMsg policyMsg,PolicyMsgDetail policyMsgDetail,List<PolicyMsgWord> policyMsgWord) async{
+    try {
+      dynamic result = await Repository.insert(PolicyMsg.table, policyMsg);
+      print("[PolicyMsg]Create :$result");
 
-//     DBResult dbResult = DBResult(true,DBResult.saveMsg);
+      dynamic result1 =
+          await Repository.insert(PolicyMsgDetail.table, policyMsgDetail);
+      print("[PolicyMsgDetail]Create :$result1");
 
-//     try{
-                    
-//       dynamic result = await Repository.insert(PolicyMsg.table, policyMsg);
-//       print("[PolicyMsg]Create :$result");
+      policyMsgWord.forEach((word) async {
+        dynamic result2 = await Repository.insert(PolicyMsgWord.table, word);
+        print("[PolicyMsgWord]Create :$result2");
+      });
+    } catch (ex) {
+      dbResult.isSucess = false;
+      dbResult.message = ex.toString();
+      print("SMS Service: $ex");
+    }
 
-//       dynamic result1 = await Repository.insert(PolicyMsgDetail.table,policyMsgDetail);
-//       print("[PolicyMsgDetail]Create :$result1");
-      
-//       policyMsgWord.forEach((word) async {
-//         dynamic result2 = await Repository.insert(PolicyMsgWord.table,word);
-//         print("[PolicyMsgWord]Create :$result2");
-
-//       });                    
-                    
-//     }catch(ex){
-//       dbResult.isSucess = false;
-//       dbResult.message = ex.toString();
-//       print("SMS Service: $ex");
-//     }
-    
-
-//     return dbResult;
-
-//   }
-// }
+    return dbResult;
+  }
+}

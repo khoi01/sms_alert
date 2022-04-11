@@ -3,7 +3,7 @@ import 'package:sms_alert/models/db/ConWord.dart';
 import 'package:sms_alert/models/db/ConWordMapPolicy.dart';
 import 'package:sms_alert/repository/Repository.dart';
 import 'package:sms_alert/ui/home/HomeView.dart';
-import 'package:sms_alert/ui/message/Policy/config/selectWord/PolicyConSelecWordtViewContext.dart';
+import 'package:sms_alert/ui/message/Policy/config/configWord/selectWord/PolicyConSelecWordtViewContext.dart';
 import 'package:sms_alert/utils/strings.dart';
 import 'package:sms_alert/utils/widgets.dart';
 import 'package:sms_alert/utils/db.dart';
@@ -70,7 +70,6 @@ class _PolicyConSelectWordViewState extends State<PolicyConSelectWordView> {
 
   Future<DBResult> _save() async{
 
-     String date = DateTime.now().toIso8601String();
      DBResult dbResult = DBResult(true,DBResult.saveMsg); 
 
      selectedWords.forEach((word) {
@@ -78,7 +77,7 @@ class _PolicyConSelectWordViewState extends State<PolicyConSelectWordView> {
        ConWordMapPolicy conWordMapPolicy = new ConWordMapPolicy(
         wordID: word.wordID,
         policyID: widget.policyID,
-        createdDate: date,
+        createdDate: DateTime.now().millisecondsSinceEpoch.toString(),
         createdBy: StringRef.user     
        );
 

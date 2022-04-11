@@ -30,7 +30,7 @@ class SysMenu extends Model {
     };
   }
 
-  static SysMenu? fromMap(Map<String, dynamic> map) {
+  static SysMenu? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return SysMenu(

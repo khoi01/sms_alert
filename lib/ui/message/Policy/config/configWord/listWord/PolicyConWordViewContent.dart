@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sms_alert/models/db/ConWord.dart';
 import 'package:sms_alert/repository/WordMapPolicyRepository.dart';
-import 'package:sms_alert/ui/message/Policy/config/selectWord/PolicyConSelectWordView.dart';
+import 'package:sms_alert/ui/message/Policy/config/configWord/selectWord/PolicyConSelectWordView.dart';
 import 'package:sms_alert/utils/strings.dart';
 
 class PolicyConWordFormViewUI extends StatefulWidget {

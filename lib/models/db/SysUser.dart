@@ -22,7 +22,7 @@ class SysUser extends Model {
     };
   }
 
-  static SysUser? fromMap(Map<String, dynamic> map) {
+  static SysUser? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return SysUser(

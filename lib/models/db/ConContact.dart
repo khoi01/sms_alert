@@ -44,7 +44,7 @@ class ConContact extends Model {
     };
   }
 
-  static ConContact? fromMap(Map<String, dynamic> map) {
+  static ConContact? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return ConContact(

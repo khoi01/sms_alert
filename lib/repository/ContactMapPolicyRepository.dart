@@ -5,7 +5,20 @@ import 'package:sms_alert/utils/db.dart';
 
 
 class ContactMapPolicyRepository{
-  static Future<List<ConContact?>?> getContactsByPolicyID(String? policyID) async{
+
+
+  //Delete single Contact inside specific policy
+  static Future<bool> removeContactByPolicyIDAndContactID(String? policyID,String? contactID) async {
+    
+    int isDelete = await DB.db()!.delete(ConContactMapPolicy.table,
+    where: 'policyID = ? and contactID = ?',
+    whereArgs: [policyID,contactID]);
+
+    return isDelete == 1 ? true : false;
+
+  }
+
+  static Future<List<ConContact?>?> getMembersByPolicyID(String? policyID) async{
     List<ConContact?> members = [];
 
     List<Map<String,dynamic>> result = await DB.db()!.query(

@@ -31,7 +31,7 @@ class ConWordMapPolicy extends Model {
     };
   }
 
-  static ConWordMapPolicy? fromMap(Map<String, dynamic> map) {
+  static ConWordMapPolicy? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return ConWordMapPolicy(

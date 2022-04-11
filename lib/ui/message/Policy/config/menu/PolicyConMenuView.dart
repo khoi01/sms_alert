@@ -3,9 +3,9 @@ import 'package:sms_alert/ui/message/Policy/config/menu/PolicyConMenuViewContent
 
 class PolicyConMenuView extends StatefulWidget {
 
-final String? policyID;
+final String policyID;
 
-  PolicyConMenuView({Key? key, this.policyID}) : super(key: key);
+  PolicyConMenuView({Key? key, required this.policyID}) : super(key: key);
 
   @override
   _PolicyConMenuViewState createState() => _PolicyConMenuViewState();

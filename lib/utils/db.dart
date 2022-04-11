@@ -29,6 +29,13 @@ abstract class DB{
       print(ex);
     }
   }
+
+  //reinitialize db
+  static reinit() async {
+    if(_db == null){
+      await init();
+    }
+  }
   
   static Database? db(){
 		return _db;
@@ -80,6 +87,9 @@ abstract class DB{
       policyName TEXT,
       description TEXT,
       status INTEGER,
+      containNewMessage INTEGER,
+      enableNotification INTEGER,
+      notificationId TEXT,
       createdDate TEXT,
       createdBy TEXT,
       modifiedDate TEXT,
@@ -121,7 +131,7 @@ abstract class DB{
       createdDate TEXT,
       createdBy TEXT,
       modifiedDate TEXT,
-      modifiedBy Text,
+      modifiedBy TEXT,
       PRIMARY KEY (wordID,policyID)
       )'''
     );
@@ -135,7 +145,8 @@ abstract class DB{
       createdDate TEXT,
       createdBy TEXT,
       modifiedDate TEXT,
-      modifiedBy Text,
+      modifiedBy TEXT,
+      source TEXT,
       PRIMARY KEY(msgID , contactID, policyID)
       )'''
     );
@@ -144,6 +155,7 @@ abstract class DB{
     await db.execute(
       ''' CREATE TABLE ${PolicyMsgDetail.table}
       (msgID TEXT PRIMARY KEY NOT NULL,
+      policyID TEXT NOT NULL,
       message TEXT
       )'''
     );
@@ -153,6 +165,7 @@ abstract class DB{
       ''' CREATE TABLE ${PolicyMsgWord.table}
       (msgID TEXT NOT NULL,
       wordID TEXT NOT NULL,
+      policyID TEXT NOT NULL,
       PRIMARY KEY(msgID , wordID)
       )'''
     );
@@ -194,7 +207,7 @@ class DBResult {
     };
   }
 
-  static DBResult? fromMap(Map<String, dynamic> map) {
+  static DBResult? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return DBResult(

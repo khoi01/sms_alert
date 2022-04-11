@@ -76,14 +76,18 @@ class _PolicyCreateViewState extends State<PolicyCreateView> {
   void _save() async{
     
     var policyID = DB.generateId();
-    String date = DateTime.now().toIso8601String();
-    
+    String date = DateTime.now().millisecondsSinceEpoch.toString();
+
     ConPolicy conPolicy = new ConPolicy(
       policyID: policyID,
       policyName: _policyNameController.text,
       description: StringRef.empty,
       createdDate: date,
+      containNewMessage: 0,
+      enableNotification: 1,
+      notificationId: policyID,
       createdBy: StringRef.user
+
     );
 
     dynamic result = await Repository.insert(ConPolicy.table,conPolicy);

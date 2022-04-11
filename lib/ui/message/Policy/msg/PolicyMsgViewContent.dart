@@ -1,73 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:sms_alert/components/ComponentCircleWord.dart';
+import 'package:sms_alert/components/ComponentMessageContent.dart';
+import 'package:sms_alert/models/db/ConWord.dart';
 import 'package:sms_alert/models/model/Policy.dart';
-import 'package:sms_alert/repository/PolicyMsgRepository.dart';
+import 'package:sms_alert/repository/WordRepository.dart';
 
 class PolicyMsgViewContentUI extends StatefulWidget {
+  final List<ComponentMessageContent>? componentMessageContents;
 
-  final String? policyID;
-
-
-  PolicyMsgViewContentUI({Key? key, this.policyID,}) : super(key: key);
+  PolicyMsgViewContentUI({
+    Key? key,
+    required this.componentMessageContents,
+  }) : super(key: key);
 
   @override
   _PolicyMsgViewContentUIState createState() => _PolicyMsgViewContentUIState();
 }
 
 class _PolicyMsgViewContentUIState extends State<PolicyMsgViewContentUI> {
-
-  List<Policy>? _policies;
-
   @override
   void initState() {
     super.initState();
-    getPolicyMsg();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(3),
       //height: MediaQuery.of(context).size.height,
-       child: _policies != null 
-       ? ListView.builder(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              itemCount: _policies?.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                    child: Card(child: ListTile(title: Text(
-                      _policies?[index].policyMsgDetail?.message ?? ""), 
-                      subtitle: Text(
-                        _policies?[index].policyMsg?.createdDate ?? ""
-                      ),))
-                );
-              },
-            )
-          : Center(child: const CircularProgressIndicator()),
+      child: listViewBuilder(),
     );
   }
 
+  Widget listViewBuilder() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemCount: widget.componentMessageContents?.length,
+      itemBuilder: (BuildContext context, int index) {
+        ComponentMessageContent? component =
+            widget.componentMessageContents?[index];
 
-  void getPolicyMsg() async{ 
-
-    //  List<Policy> policies = await PolicyMsgRepository.getPoliciesMsgByPolicyID(widget.policyID);
-
-  PolicyMsgRepository.getPoliciesMsgByPolicyID(widget.policyID).then((policies){
-  
-  
-     if((policies?.length ?? 0)>0){
-        _policies = policies;
-      }
-
-
-      refresh();
-  });
-     
+        return ComponentMessageContent(
+            policy: component?.policy,
+            componentcircleWords: component?.componentcircleWords);
+      },
+    );
   }
 
-  void refresh(){
-    setState(() {
-      
-    });
+  Future<List<ComponentCircleWord>?> initWords(Policy? policy) async {
+    List<ComponentCircleWord> componentCircleWords = [];
+
+    ConWord? conWord = await WordRepository.getWordByWordID(
+        policy?.policyMsgWord?.first.wordID);
+    componentCircleWords.add(ComponentCircleWord(conWord: conWord));
+
+    componentCircleWords
+        .add(ComponentCircleWord(conWord: ConWord(word: "Initial")));
+
+    return componentCircleWords;
   }
 }

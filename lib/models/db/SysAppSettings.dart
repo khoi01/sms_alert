@@ -19,7 +19,7 @@ class SysAppSettings extends Model {
     };
   }
 
-  static SysAppSettings? fromMap(Map<String, dynamic> map) {
+  static SysAppSettings? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return SysAppSettings(

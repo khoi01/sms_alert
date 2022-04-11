@@ -36,7 +36,7 @@ class ConWord extends Model {
     };
   }
 
-  static ConWord? fromMap(Map<String, dynamic> map) {
+  static ConWord? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
   
     return ConWord(
