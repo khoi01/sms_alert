@@ -67,18 +67,17 @@ class MSG {
       members?.forEach((member) async {
         String? phoneModified =
             member.phone?.replaceAll(new RegExp(r"\s+\b|\b\s|\)|\(|\-"), "");
+        print("phonemodified:$phoneModified sender:$sender ");
+
         if (phoneModified == sender && words != null) {
-   
-
           if (isContainAnyWordFilter(message.split(' '), words!)) {
-   
-          //show/notify user via notification
-          AppNotification.showNotication(policy,message);
+            //show/notify user via notification
+            AppNotification.showNotication(policy, message);
 
-          //update new message arrived
-          await PolicyRepository.updateContainNewMessageByPolicyID(
-              policy.policyID);
-              
+            //update new message arrived
+            await PolicyRepository.updateContainNewMessageByPolicyID(
+                policy.policyID);
+
             var msgId = DB.generateId();
 
             PolicyMsg policyMsg = new PolicyMsg(

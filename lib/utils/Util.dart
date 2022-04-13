@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_alert/models/db/ConPolicy.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppUtils {
   static closeKeyboard(BuildContext context) {
@@ -8,7 +9,7 @@ class AppUtils {
   }
 }
 
-class AppImages{
+class AppImages {
   static String appIcon = "assets/icons/icon.png";
 }
 
@@ -19,14 +20,22 @@ class AppMsgSource {
   static String telegram = "TELEGRAM";
 }
 
+class AppUrlLauncher {
+  static String aboutThisApp =
+      "https://github.com/khoi01/furry-giggle/blob/main/about-sms-filter-alert";
+  static String guideApp =
+      "https://github.com/khoi01/furry-giggle/blob/main/guide-sms-filter-alert";
+
+  static void launchURL(var url) async =>
+      await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+}
+
 class AppNotification {
   static showNotication(ConPolicy? policy, String? msg) {
-
     //check if policy enable notifcation or npt
     if ((policy?.enableNotification == 1 ? true : false)) {
       AwesomeNotifications().createNotification(
           content: NotificationContent(
-            
               id: 10,
               channelKey: 'basic_channel',
               title: 'SMS Alert (${policy?.policyName})',

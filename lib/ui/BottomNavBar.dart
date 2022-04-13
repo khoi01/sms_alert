@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sms_alert/ui/home/HomeView.dart';
+import 'package:sms_alert/ui/setting/SettingView.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -35,8 +36,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  getBottomNavBarItem(0, Icons.account_balance, 'EIS MBI'),
-                  getBottomNavBarItem(2, Icons.person, 'AKAUN'),
+                  getBottomNavBarItem(0, Icons.account_balance, 'POLICIES'),
+                  getBottomNavBarItem(2, Icons.app_settings_alt, 'ABOUT'),
                 ],
               ),
             ),
@@ -51,9 +52,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           }
           return false;
         },
-        child: (currentIndex == 0)
-            ? HomeView()
-            : HomeView(),
+        child: (currentIndex == 0) ? HomeView() : SettingView(),
       ),
     );
   }
@@ -89,20 +88,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
             Icon(
               icon,
               size: 21.0,
-              color: (currentIndex == index) ? Color(0xFF60A32A) : const Color(0xFF808080),
+              color: (currentIndex == index)
+                  ? Color(0xFF60A32A)
+                  : const Color(0xFF808080),
             ),
             SizedBox(height: 5.0),
             Text(
               text,
               style: (currentIndex == index)
                   ? TextStyle(
-  fontSize: 10.0,
-  color: Color(0xFF60A32A),
-)
+                      fontSize: 10.0,
+                      color: Color(0xFF60A32A),
+                    )
                   : TextStyle(
-  fontSize: 10.0,
-  color: Color(0xFF808080),
-),
+                      fontSize: 10.0,
+                      color: Color(0xFF808080),
+                    ),
             ),
           ],
         ),

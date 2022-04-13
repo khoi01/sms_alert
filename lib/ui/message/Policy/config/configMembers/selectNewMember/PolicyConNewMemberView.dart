@@ -3,7 +3,6 @@ import 'package:sms_alert/components/ComponentSearchBarLocation.dart';
 import 'package:sms_alert/models/db/ConContact.dart';
 import 'package:sms_alert/models/db/ConContactMapPolicy.dart';
 import 'package:sms_alert/repository/Repository.dart';
-import 'package:sms_alert/ui/home/HomeView.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:sms_alert/ui/message/Policy/config/configMembers/selectNewMember/PolicyConNewMemberViewContent.dart';
 import 'package:sms_alert/utils/contacts.dart';
@@ -97,12 +96,10 @@ class _PolicyConNewMemberViewState extends State<PolicyConNewMemberView> {
   }
 
   void save() {
-
     widget.existedMembers?.forEach((existedMember) {
-      
-      _selectedMembers?.removeWhere((newMember) => newMember?.contactID == existedMember?.contactID);
+      _selectedMembers?.removeWhere(
+          (newMember) => newMember?.contactID == existedMember?.contactID);
     });
-
 
     _selectedMembers?.forEach((contact) async {
       dynamic result1 = await Repository.insert(ConContact.table, contact!);
@@ -120,12 +117,11 @@ class _PolicyConNewMemberViewState extends State<PolicyConNewMemberView> {
       print("[ConContactMapPolicy]Create :$result3");
 
       //go back to main
-       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeView()), 
-                        (Route<dynamic> route) => false,
-                        );
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => BottomAppBar()),
+        (Route<dynamic> route) => false,
+      );
     });
-
-
-
   }
 }
