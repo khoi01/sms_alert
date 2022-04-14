@@ -42,7 +42,7 @@ class _SelectedMemberUIState extends State<SelectedMemberUI> {
       children: [
         Card(
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.11,
             width: MediaQuery.of(context).size.width * 0.85,
             color: Colors.blue.shade200,
             child: listViewSelectedMember(),

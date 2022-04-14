@@ -75,8 +75,8 @@ class AppNotification {
     });
 
     ////Notification Listener
-  
-  AwesomeNotifications()
+
+    /*AwesomeNotifications()
         .actionStream
         .listen((ReceivedNotification receivedNotification) {
       Navigator.pushAndRemoveUntil(
@@ -85,6 +85,6 @@ class AppNotification {
         (Route<dynamic> route) => false,
       );
     });
-    
+   */
   }
 }

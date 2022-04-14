@@ -4,6 +4,7 @@ import 'package:sms_alert/models/db/ConContact.dart';
 import 'package:sms_alert/models/db/ConContactMapPolicy.dart';
 import 'package:sms_alert/repository/Repository.dart';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:sms_alert/ui/home/HomeView.dart';
 import 'package:sms_alert/ui/message/Policy/config/configMembers/selectNewMember/PolicyConNewMemberViewContent.dart';
 import 'package:sms_alert/utils/contacts.dart';
 import 'package:sms_alert/utils/strings.dart';
@@ -119,7 +120,7 @@ class _PolicyConNewMemberViewState extends State<PolicyConNewMemberView> {
       //go back to main
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => BottomAppBar()),
+        MaterialPageRoute(builder: (context) => HomeView()),
         (Route<dynamic> route) => false,
       );
     });

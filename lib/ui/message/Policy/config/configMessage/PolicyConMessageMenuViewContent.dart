@@ -41,7 +41,7 @@ class _PolicyConMessageContentUIState extends State<PolicyConMessageContentUI> {
                       WidgetRef.showToasted("Success delete all msg.", true);
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeView()),
+                        MaterialPageRoute(builder: (context) => BottomAppBar()),
                         (Route<dynamic> route) => false,
                       );
                     } else {
