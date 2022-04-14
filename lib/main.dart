@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_alert/ui/BottomNavBar.dart';
 import 'package:sms_alert/utils/Util.dart';
@@ -21,6 +22,8 @@ class SmsAlertApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //init notification
     AppNotification.init(context);
+
+  
 
     return MaterialApp(title: 'Material App', home: BottomNavBar());
   }

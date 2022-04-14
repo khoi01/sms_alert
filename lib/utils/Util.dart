@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_alert/models/db/ConPolicy.dart';
+import 'package:sms_alert/ui/BottomNavBar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppUtils {
@@ -73,16 +74,17 @@ class AppNotification {
       }
     });
 
-    //Notification Listener
-    // AwesomeNotifications()
-    //     .actionStream
-    //     .listen((ReceivedNotification receivedNotification) {
-    //   print("====================NOTIFICATION IS WORKING!");
-    //   // Navigator.of(context).pushNamed('/NotificationPage', arguments: {
-    //   //   // your page params. I recommend you to pass the
-    //   //   // entire *receivedNotification* object
-    //   //   id: receivedNotification.id
-    //   // });
-    // });
+    ////Notification Listener
+  
+  AwesomeNotifications()
+        .actionStream
+        .listen((ReceivedNotification receivedNotification) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+        (Route<dynamic> route) => false,
+      );
+    });
+    
   }
 }
