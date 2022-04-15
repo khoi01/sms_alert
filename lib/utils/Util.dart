@@ -2,7 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_alert/models/db/ConPolicy.dart';
 import 'package:sms_alert/ui/BottomNavBar.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class AppUtils {
   static closeKeyboard(BuildContext context) {
@@ -21,15 +21,15 @@ class AppMsgSource {
   static String telegram = "TELEGRAM";
 }
 
-class AppUrlLauncher {
-  static String aboutThisApp =
-      "https://github.com/khoi01/furry-giggle/blob/main/about-sms-filter-alert";
-  static String guideApp =
-      "https://github.com/khoi01/furry-giggle/blob/main/guide-sms-filter-alert";
+// class AppUrlLauncher {
+//   static String aboutThisApp =
+//       "https://github.com/khoi01/furry-giggle/blob/main/about-sms-filter-alert";
+//   static String guideApp =
+//       "https://github.com/khoi01/furry-giggle/blob/main/guide-sms-filter-alert";
 
-  static void launchURL(var url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
-}
+//   static void launchURL(var url) async =>
+//       await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+// }
 
 class AppNotification {
   static showNotication(ConPolicy? policy, String? msg) {

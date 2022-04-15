@@ -12,10 +12,17 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+
     <application
         android:name="${applicationName}"
         android:label="sms_alert"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- <service android:name=".SmsService"
+            android:enabled="true"
+            android:exported="true"> 
+
+        </service>-->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

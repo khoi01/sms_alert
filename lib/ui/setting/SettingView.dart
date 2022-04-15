@@ -38,7 +38,7 @@ class _SettingViewState extends State<SettingView> {
           children: [
             InkWell(
               onTap: () {
-                AppUrlLauncher.launchURL(AppUrlLauncher.aboutThisApp);
+                // AppUrlLauncher.launchURL(AppUrlLauncher.aboutThisApp);
               },
               child: Card(
                 child: ListTile(
@@ -52,7 +52,7 @@ class _SettingViewState extends State<SettingView> {
             ),
             InkWell(
               onTap: () {
-                AppUrlLauncher.launchURL(AppUrlLauncher.guideApp);
+                // AppUrlLauncher.launchURL(AppUrlLauncher.guideApp);
               },
               child: Card(
                 child: ListTile(
