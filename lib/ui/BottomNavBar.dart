@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sms_alert/ui/home/HomeView.dart';
-import 'package:sms_alert/ui/setting/SettingView.dart';
+import 'package:sms_alert/ui/setting/SettingView/SettingView.dart';
+import 'package:sms_alert/utils/sms.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -14,10 +15,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
   DateTime? currentBackPressTime;
 
+  
+  
+
   changeIndex(index) {
     setState(() {
       currentIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+      SMS.initReceiver();
+
   }
 
   @override

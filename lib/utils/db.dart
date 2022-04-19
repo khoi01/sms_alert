@@ -1,5 +1,5 @@
-
 import 'package:sms_alert/models/db/ConContact.dart';
+import 'package:sms_alert/repository/Repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
@@ -14,75 +14,67 @@ import 'package:sms_alert/models/db/SysAppSettings.dart';
 import 'package:sms_alert/models/db/SysMenu.dart';
 import 'package:sms_alert/models/db/SysUser.dart';
 
-abstract class DB{
+abstract class DB {
   static Database? _db;
   static int get _version => 1;
 
-  static Future<void> init() async{
-    if(_db != null){return;}
+  static Future<void> init() async {
+    if (_db != null) {
+      return;
+    }
 
-    try{
-      String _path = await getDatabasesPath()+"smsAlertDB";
-      _db = await openDatabase(_path,version:_version,onCreate: onCreate);
-
-    }catch(ex){
+    try {
+      String _path = await getDatabasesPath() + "smsFilterAlertDB";
+      _db = await openDatabase(_path, version: _version, onCreate: onCreate);
+    } catch (ex) {
       print(ex);
     }
   }
 
   //reinitialize db
-  static reinit() async {
-    if(_db == null){
-      await init();
+  static reinit(Function onBegin) async {
+    if (_db == null) {
+      await init().then((value) => {onBegin()});
     }
   }
-  
-  static Database? db(){
-		return _db;
-	}
+
+  static Database? db() {
+    return _db;
+  }
 
   //generate id
-  static String generateId(){
+  static String generateId() {
     var uuid = Uuid();
     return uuid.v1();
   }
 
-  static void onCreate(Database db, int version) async{
+  static void onCreate(Database db, int version) async {
     print("Database:Initialize Table..");
     print("Database: Version $_version");
 
     print("1.Database: Table ${SysAppSettings.table} created..");
-		await db.execute
-    (
-      '''CREATE TABLE ${SysAppSettings.table} 
-    (id TEXT PRIMARY KEY NOT NULL,
-     name TEXT
-     )'''
-     );
+    await db.execute('''CREATE TABLE ${SysAppSettings.table} 
+    (isFirstTimeLogin INTEGER
+     )''');
 
     print("2.Database: Table ${SysMenu.table} created..");
-    await db.execute(
-      '''CREATE TABLE ${SysMenu.table}
+    await db.execute('''CREATE TABLE ${SysMenu.table}
       (menuID TEXT PRIMARY KEY NOT NULL,
       menuName TEXT,
       description TEXT,
       status INTEGER,
       package TEXT
-      )'''
-    );
+      )''');
 
     print("3.Database: Table ${SysUser.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${SysUser.table}
+    await db.execute(''' CREATE TABLE ${SysUser.table}
       (name TEXT,
       email TEXT,
       password TEXT
-      )'''
-    );
+      )''');
 
     print("4.Database: Table ${ConPolicy.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${ConPolicy.table}
+    await db.execute(''' CREATE TABLE ${ConPolicy.table}
       (policyID TEXT PRIMARY KEY NOT NULL,
       policyName TEXT,
       description TEXT,
@@ -94,12 +86,10 @@ abstract class DB{
       createdBy TEXT,
       modifiedDate TEXT,
       modifiedBy TEXT
-      )'''
-    );
+      )''');
 
     print("5.Database: Table ${ConWord.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${ConWord.table}
+    await db.execute(''' CREATE TABLE ${ConWord.table}
       (wordID TEXT PRIMARY KEY NOT NULL,
       word TEXT,
       status INTEGER,
@@ -107,12 +97,10 @@ abstract class DB{
       createdBy TEXT,
       modifiedDate TEXT,
       modifiedBy TEXT
-      )'''
-    );
+      )''');
 
     print("6.Database: Table ${ConContactMapPolicy.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${ConContactMapPolicy.table}
+    await db.execute(''' CREATE TABLE ${ConContactMapPolicy.table}
       (contactID TEXT NOT NULL,
       policyID TEXT NOT NULL,
       createdDate TEXT,
@@ -120,12 +108,10 @@ abstract class DB{
       modifiedDate TEXT,
       modifiedBy TEXT,
       PRIMARY KEY (contactID, policyID)
-      )'''
-    );
+      )''');
 
     print("7.Database: Table ${ConWordMapPolicy.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${ConWordMapPolicy.table}
+    await db.execute(''' CREATE TABLE ${ConWordMapPolicy.table}
       (wordID TEXT NOT NULL,
       policyID TEXT NOT NULL,
       createdDate TEXT,
@@ -133,12 +119,10 @@ abstract class DB{
       modifiedDate TEXT,
       modifiedBy TEXT,
       PRIMARY KEY (wordID,policyID)
-      )'''
-    );
+      )''');
 
     print("8.Database: Table ${PolicyMsg.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${PolicyMsg.table}
+    await db.execute(''' CREATE TABLE ${PolicyMsg.table}
       (msgID TEXT NOT NULL,
       contactID TEXT NOT NULL,
       policyID TEXT NOT NULL,
@@ -148,31 +132,25 @@ abstract class DB{
       modifiedBy TEXT,
       source TEXT,
       PRIMARY KEY(msgID , contactID, policyID)
-      )'''
-    );
+      )''');
 
     print("9.Database: Table ${PolicyMsgDetail.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${PolicyMsgDetail.table}
+    await db.execute(''' CREATE TABLE ${PolicyMsgDetail.table}
       (msgID TEXT PRIMARY KEY NOT NULL,
       policyID TEXT NOT NULL,
       message TEXT
-      )'''
-    );
+      )''');
 
     print("10.Database: Table ${PolicyMsgWord.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${PolicyMsgWord.table}
+    await db.execute(''' CREATE TABLE ${PolicyMsgWord.table}
       (msgID TEXT NOT NULL,
       wordID TEXT NOT NULL,
       policyID TEXT NOT NULL,
       PRIMARY KEY(msgID , wordID)
-      )'''
-    );
+      )''');
 
     print("11.Database: Table ${ConContact.table} created..");
-    await db.execute(
-      ''' CREATE TABLE ${ConContact.table}
+    await db.execute(''' CREATE TABLE ${ConContact.table}
       (contactID TEXT PRIMARY KEY NOT NULL,
       displayName TEXT,
       givenName TEXT,
@@ -182,18 +160,21 @@ abstract class DB{
       createdBy TEXT,
       modifiedDate TEXT,
       modifiedBy TEXT
-      )'''
-    );
-  } 
-  
+      )''');
+    SysAppSettings sysAppSettings = new SysAppSettings(isFirstTimeLogin: 1);
+
+    dynamic result2 =
+        await db.insert(SysAppSettings.table, sysAppSettings.toMap());
+
+    print("[SysAppSettings]Create :$result2");
+  }
 }
 
 class DBResult {
   bool isSucess;
   String message;
-  
-  static String saveMsg = "Data saved..";
 
+  static String saveMsg = "Data saved..";
 
   DBResult(
     this.isSucess,
@@ -209,12 +190,10 @@ class DBResult {
 
   static DBResult? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
-  
+
     return DBResult(
       map['isSucess'],
       map['message'],
     );
   }
 }
-
-
