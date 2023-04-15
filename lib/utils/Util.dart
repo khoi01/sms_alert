@@ -18,7 +18,7 @@ class AppMsgSource {
   static String sms = "SMS";
   static String whatsapp = "WHATSAPP";
   static String email = "EMAIL";
-  static String telegram = "TELEGRAM";
+  static String telegram = "TELEGRAM";   
 }
 
 // class AppUrlLauncher {
@@ -60,8 +60,7 @@ class AppNotification {
         // Channel groups are only visual and are not required
         channelGroups: [
           NotificationChannelGroup(
-              channelGroupkey: 'basic_channel_group',
-              channelGroupName: 'Basic group')
+              channelGroupName: 'Basic group', channelGroupKey: 'basic_channel_group')
         ],
         debug: true);
 

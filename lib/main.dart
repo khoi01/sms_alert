@@ -4,6 +4,7 @@ import 'package:sms_alert/ui/BottomNavBar.dart';
 import 'package:sms_alert/ui/permissionInfo/PermissionInfoView.dart';
 import 'package:sms_alert/utils/Util.dart';
 import 'package:sms_alert/utils/db.dart';
+import 'package:sms_alert/utils/sms.dart';
 
 //https://github.com/FlutterOpen/flutter-widgets
 void main() async {
@@ -11,7 +12,7 @@ void main() async {
 
   //Init DB here
   await DB.init();
-  // SMS.initReceiver();
+  SMS.initReceiver();
   runApp(SmsAlertApp());
 }
 

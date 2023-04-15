@@ -25,8 +25,8 @@ class _PolicyConMessageContentUIState extends State<PolicyConMessageContentUI> {
             onTap: () {
               AwesomeDialog(
                 context: context,
-                dialogType: DialogType.QUESTION,
-                animType: AnimType.BOTTOMSLIDE,
+                dialogType: DialogType.question,
+                animType: AnimType.bottomSlide,
                 body: Text(
                     "Are you sure want to delete all message inside current policy?"),
                 desc:

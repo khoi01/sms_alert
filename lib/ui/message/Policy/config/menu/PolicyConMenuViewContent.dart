@@ -91,8 +91,8 @@ class _PolicyConMenuViewContentUIState
             onTap: () async {
               AwesomeDialog(
                 context: context,
-                dialogType: DialogType.QUESTION,
-                animType: AnimType.BOTTOMSLIDE,
+                dialogType: DialogType.question,
+                animType: AnimType.bottomSlide,
                 body: Text("Are you sure want to delete this policy"),
                 desc: 'Are you sure you want to delete this policy?',
                 dismissOnTouchOutside: false,
