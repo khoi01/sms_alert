@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 
 class ComponentSearchBarLocation extends StatefulWidget
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   final String title; //title
   final Color backgroundColor; // theme color by color admin,tech,user
   final Function onCallbackFilteredItem; //sendback filtered data
